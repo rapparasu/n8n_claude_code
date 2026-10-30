@@ -1,0 +1,90 @@
+Business Ideas:
+--------------
+
+1. AI receptionist for tradies (ChatGPT)
+
+Problem: Plumbers, electricians, builders and other tradies cannot answer every call while working. A potential customer moves on to the next business.
+
+Your solution: An AI receptionist that answers or follows up on missed calls, asks what the customer needs, captures their details, qualifies the job and books a callback.
+
+Simple POC: Connect a phone/voice provider to n8n, send the conversation to an LLM, save the lead in a database, and notify the tradie by SMS.
+
+Monetisation: Test A$99–199/month per business, potentially with usage limits or a setup fee.
+
+--how to build?
+https://chatgpt.com/c/6adb1100-ce28-83ec-b3ac-68e58a0fd391
+
+
+2. AI data migration assistant (ChatGPT)
+
+This one is particularly suited to your technical background. Build a tool that compares SQL Server views against Snowflake/dbt models, identifies missing columns and transformations, generates test cases and produces a reconciliation report.
+
+Start with SQL files as inputs and a report as the output. Later, add schema discovery, dbt integration, automated data-quality checks and CI/CD hooks.
+
+Your initial customers could be data consultancies and internal migration teams. It is less of a mass-market product, but potentially easier to differentiate with specialist knowledge.
+
+
+3. Development application lead alerts (Claude)
+
+Councils and the NSW Planning Portal publish DA lodgements and approvals as public data. A newly approved DA for a pool, extension or knockdown-rebuild means that homeowner will soon need builders, pool fencers, landscapers, solar installers and so on. Ingest, geocode, classify by project type and deliver a weekly lead feed by postcode on subscription. This is pure data engineering, has little competition at the small-trade level, and fits your earlier tradie idea neatly.
+
+The data. NSW publishes this openly: the Online DA Data API is a feed of all DAs lodged on the NSW Planning Portal since January 2019, updated daily, under a Creative Commons Attribution licence, and the government mandated all councils to use the Portal from July 2021, so coverage is statewide. 
+nsw
+nsw
+
+Who it helps. A DA is an early signal that money is about to be spent on a specific property. The main buyers are trades whose work follows an approval: pool builders and fencers, landscapers, concreters, demolition crews, electricians, solar and battery installers, kitchen and bathroom fitters, and scaffold or skip-bin hire. Material suppliers want the same signal. Real estate agents and buyers’ agents use DA clustering to spot streets turning into duplexes or townhouses, which feeds their prospecting. Homeowners benefit too, because they get relevant quotes before they’ve had to go hunting.
+
+How it helps. The value isn’t the raw record, it’s the timing and targeting. A DA moves through lodgement, determination, construction certificate and build, and different trades matter at different stages: demolition and excavation early, pools and landscaping late. A product that knows that and says “here are 14 approved pool DAs in your service area this week, worth an estimated $X” is far more useful than a data dump.
+
+Two things you need to know. First, I was wrong to say there’s little competition. There are already Apify scrapers that turn new NSW council DAs into scored, trade-tagged leads at US$0.03 per lead and tag each record with the trades likely to win the work, such as pool builders, demolition crews and electricians. That said, they sell raw data to technical users, and a plumber in Penrith isn’t going to run an Apify actor. Your opening is the done-for-you layer for non-technical tradies. 
+apify
+apify
+
+Second, the data contains addresses but no owner contact details, and the Spam Act restricts unsolicited commercial emails and SMS without consent. In practice, the outreach channel is addressed mail to “the owner” at the property. So the strongest version of the product is: weekly filtered leads by trade, suburb and project value, plus an automated personalised letter or postcard campaign through a print-and-mail service, plus response tracking. That turns “data” into “jobs,” which is what tradies will pay for. A further moat is expanding to other states: as far as I know, none has a single statewide feed like NSW, so stitching together council-by-council sources is real data-engineering work that a casual competitor won’t bother with. Worth verifying before you plan around it.
+
+4. Snowflake cost optimisation for mid-size companies (Claude) 
+
+This is your most unfair advantage: you’ve already worked on warehouse credit forecasting, and plenty of companies on Snowflake overspend without a dedicated platform team. A tool or consulting package covering warehouse right-sizing, idle detection, query cost attribution and spend forecasting could command far higher prices than any tradie app. The caveat matters: build it from scratch on your own time and don’t reuse anything from work, and check that it doesn’t conflict with your employment terms, since it’s close to your day job.
+
+
+****Claude's recommendation****
+
+On go-to-market: a free “Snowflake health check” offer works well as a lead magnet; LinkedIn posts on specific cost findings work well for reaching data leaders; and the Snowflake partner network can bring referrals. One caution: this sits very close to your day job, so the employment-contract check matters more here than for any other idea.
+
+My overall take: the DA idea is quicker to test and has a clearer path to a cheap POC; the Snowflake idea has higher prices per customer but a slower sales cycle. Want me to sketch the data model and n8n pipeline for a DA lead POC focused on a single trade, say pool builders in Sydney?
+
+Calude's thoughts on "AI receptionist for tradies":
+
+My honest take: it’s a good problem and a weak business position, unless you change the angle. Here’s why, and how I’d approach it if you still want to pursue it.
+
+Why it’s tempting. The demand is proven: tradies genuinely lose jobs to voicemail, and they understand the pitch in five seconds. It’s also very buildable for you. A voice AI platform (Vapi, Retell or similar) handles the call, Twilio handles numbers and SMS, and n8n does everything after the call: logging the lead, qualifying, notifying the tradie, scheduling the callback, pushing into their CRM. You could have a working demo in a week or two.
+
+Why it’s a hard business.
+
+The market is filling fast with funded, Australian-built competitors, and as I mentioned earlier, people are now spinning these up on no-code tools in an afternoon. When anyone can build it, the product itself stops being the moat; distribution and trust become the moat, and you’d be starting at zero on both.
+
+Margins are thinner than they look. You pay per minute for telephony, speech-to-text, the LLM and text-to-speech. At realistic volumes that’s manageable, but it caps what you can charge, and you’ll be priced against competitors racing toward cheap.
+
+Tradies are a churn-prone customer base. They’re price-sensitive, sceptical of tech, and one bad call (the AI mishearing an address, sounding robotic to an older customer, or mishandling an emergency) can get you switched off. The quality bar on voice is unforgiving.
+
+There’s also setup friction and compliance. Call diversion has to be configured with their carrier, and recording calls has state-by-state consent rules, so you’ll need a clear disclosure at the start of each call and Privacy Act–compliant handling of what you capture.
+
+What’s actually good about your version. Booking a callback rather than booking the job is a smart choice. Many tradies don’t want an AI committing them to a time slot or quoting a price; they want to know who called, what they need, whether it’s worth their time, and when to ring back. That’s simpler to build, less risky, and arguably closer to what they’ll trust. The “follow up on missed calls” part is also the cheapest and most robust piece: an instant SMS (“Sorry we missed you, what do you need help with?”) captures a large share of the value without any voice AI at all.
+
+If I were doing it, I’d change the angle in one of these ways.
+
+Go narrow on a vertical. “AI receptionist for tradies” competes with everyone. “Emergency triage for plumbers and electricians” or “after-hours line for locksmiths” lets you tune the script, urgency rules and qualifying questions so well that generic tools look clumsy by comparison.
+Sell through a channel instead of door to door. Trade suppliers, industry associations, franchise groups, or accountants and bookkeepers who serve tradies can each bring you dozens of customers. A franchise group with 40 locations is one sale, not 40.
+Make it a bundle, not a receptionist. Missed-call capture plus quote follow-up plus a post-job review request is a “lead recovery” product that’s harder to compare on price than a bare AI receptionist.
+Start as a managed service. Set it up by hand for five tradies, listen to every call recording, and fix the scripts weekly. That hands-on tuning is where quality comes from, and quality is the only thing that will keep customers from churning.
+
+How to validate it in two weeks. Build the SMS-only text-back plus qualification flow first (no voice), give it free to five local tradies for a fortnight, and measure how many missed calls turned into real leads and jobs. If the numbers are compelling, add voice for the calls where SMS doesn’t land and start charging. If tradies don’t care enough to keep it switched on when it’s free, you’ve saved yourself months.
+
+So: viable as a learning project and possibly as a small niche service business, but I wouldn’t bet on it becoming a scalable SaaS unless you find a vertical or distribution channel the funded players aren’t covering. Want me to sketch the n8n workflow for the SMS-first version?
+
+
+
+
+
+
+
